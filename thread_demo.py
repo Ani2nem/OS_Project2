@@ -4,12 +4,14 @@ import threading
 gLock = threading.Semaphore(1)
 gCount = 0
 
+
 def threadcode(id):
     global gCount # I want to change the value of gCount
     gLock.acquire()
     print("Thread " + str(id) + " has count " + str(gCount))
     gCount = gCount+1
     gLock.release()
+
 
 # Create threads
 threads = []
