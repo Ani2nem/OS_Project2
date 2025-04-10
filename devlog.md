@@ -191,3 +191,21 @@ The main works kind of like this:
 
 
 
+
+
+# Apr 10th 2025 - 1:00 pm
+
+## Thoughts so far, Started the project
+
+
+## Plan for this session
+
+
+
+## Session Progress
+
+
+
+## Need to do
+
+- Turn in the project
