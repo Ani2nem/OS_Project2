@@ -191,16 +191,17 @@ The main works kind of like this:
 
 
 
-
-
 # Apr 10th 2025 - 1:00 pm
 
 ## Thoughts so far, Started the project
 
+The main code of the project is complete, I just need to test the project and hope nothing breaks or it doesn't take too long. 
 
 ## Plan for this session
 
-
+- Test my code and make sure it is working, both with small sample and full 50 sample.
+- Complete the ReadMe file for running instructions
+- Commit, push and turn in the project.
 
 ## Session Progress
 
