@@ -72,7 +72,6 @@ Implement the learning and complete the testing of the project to see if it is w
 
 
 
-
 # Apr 7th 2025 - 10:00 am
 
 ## Thoughts so far, Started the project
@@ -136,6 +135,44 @@ Test the implementation with a small number of customers first
 
 Debug any issues that arise during testing
 Implement proper error handling for edge cases
+
+
+# Apr 10th 2025 - 10:00 am
+
+## Thoughts so far, Started the project
+I've made some good progress so far, checked my code again to see if it is working right and it looks all good to me. I got the teller function
+logic done and it's handling both deposit and withdrawl transactions appropriately making sure the manager intercations are safe and properly synced.
+
+## Plan for this session
+
+Need to focus on completing the customer thread function and the main function to get the simulation fully working.
+
+Complete the customer thread function:
+- Finish the line waiting logic
+- Implement the teller selection process
+- Complete the transaction communication with teller
+I- mplement leaving the bank
+
+
+Complete the main function:
+- Create and start all teller and customer threads
+- Implement proper waiting for threads to complete
+- Handle bank closing correctly
+
+
+Test the implementation with a small number of customers first
+
+Debug any issues that arise during testing
+Implement proper error handling for edge cases
+
+
+
+## Session Progress
+
+
+
+
+## Need to do
 
 
 
