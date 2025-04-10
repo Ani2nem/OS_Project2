@@ -87,7 +87,7 @@ def teller(id):
             manager_semaphore.acquire()
             print(f"Teller {id} [Customer {customer_id}]: getting manager's permission")
             
-            # Sleep to simulate interaction with manager (5-30ms)
+            # Sleep to simulate interaction with manager (5-30ms) like specified
             time.sleep(random.randint(5, 30) / 1000)
             
             print(f"Teller {id} [Customer {customer_id}]: got manager's permission")
@@ -98,7 +98,7 @@ def teller(id):
         safe_semaphore.acquire()
         print(f"Teller {id} [Customer {customer_id}]: enter safe")
         
-        # Sleep to simulate transaction in safe (10-50ms)
+        # Sleep to simulate transaction in safe (10-50ms) like specified
         time.sleep(random.randint(10, 50) / 1000)
         
         # Leave the safe
@@ -167,7 +167,7 @@ def customer(id):
     # Customer is selecting a teller
     print(f"Customer {id} []: selecting a teller.")
     
-    # Try to find an available teller
+    # Try to find an open teller
     selected_teller = None
     
     line_mutex.acquire()
@@ -236,23 +236,40 @@ def customer(id):
     print(f"Customer {id} []: leaves the bank")
 
 
-# Main function - just a placeholder for now
+# Main function
 def main():
-    # Create teller threads
+    global bank_closed
+    
+    # Create the nneded teller threads
     teller_threads = []
     for i in range(3):
-        # TODO: Create and start teller threads
-        pass
+        t = threading.Thread(target=teller, args=(i,))
+        teller_threads.append(t)
+        t.start()
     
-    # Create customer threads
+    # Create the needed customer threads
     customer_threads = []
     for i in range(50):
-        # TODO: Create and start customer threads
-        pass
+        c = threading.Thread(target=customer, args=(i,))
+        customer_threads.append(c)
+        c.start()
     
-    # TODO: Wait for all threads to finish
-    # TODO: Handle bank closing
-    pass
+    # Wait for all customer threads to finish
+    for c in customer_threads:
+        c.join()
+    
+    # Flag that the bank is closed
+    bank_closed = True
+    
+    # Let all tellers know just in case they're waiting for customers
+    for i in range(3):
+        customer_at_teller[i].release()
+    
+    # Wait for all teller threads to finish
+    for t in teller_threads:
+        t.join()
+    
+    print("The bank is closed for the day, see you tomorrow!")
 
 if __name__ == "__main__":
     main()

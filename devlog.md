@@ -169,10 +169,24 @@ Implement proper error handling for edge cases
 
 ## Session Progress
 
+Completed the customer thread, it can:
+- do entry through the door with semaphore handling
+- Teller selection logic allows customers to select an available teller or wait
+- have a full communcation sequence with the teller
 
+
+I also finished up the main function so I can check how the program is working.
+The main works kind of like this:
+- It first creates and starts 3 teller threads
+- It also starts 50 customer threads
+- Waits for all customers to be served before moving forward
+- if the bank closes it also tells them that, like the instructions specified
+- and it makes sure all the tellers are exited properly too. 
 
 
 ## Need to do
+
+- Testing the functionality. 
 
 
 
