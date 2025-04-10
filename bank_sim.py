@@ -141,12 +141,12 @@ def teller(id):
 
 # Customer function - only basic structure defined so far
 def customer(id):
-    # Decide transaction type (0 for deposit, 1 for withdrawal)
+    # Decide transaction type (0 is for a deposit, 1 for a withdrawal)
     transaction_type = random.randint(0, 1)
     transaction_name = "deposit" if transaction_type == 0 else "withdrawal"
     print(f"Customer {id} []: wants to perform a {transaction_name} transaction")
     
-    # Wait a random time before entering bank (0-100ms)
+    # Wait a random time before entering bank (0 to 100ms), give space
     time.sleep(random.randint(0, 100) / 1000)
     
     # Wait for bank to open
@@ -159,13 +159,81 @@ def customer(id):
     # Enter through the door (only 2 at a time)
     door_semaphore.acquire()
     print(f"Customer {id} []: entering bank.")
-    
+    door_semaphore.release()  # Release after entering
     
     # Get in line
     print(f"Customer {id} []: getting in line.")
     
-
-    # To be continued in next session...
+    # Customer is selecting a teller
+    print(f"Customer {id} []: selecting a teller.")
+    
+    # Try to find an available teller
+    selected_teller = None
+    
+    line_mutex.acquire()
+    for i in range(3):
+        # Check if teller is actually available (non-blocking)
+        if teller_available[i].acquire(blocking=False):
+            selected_teller = i
+            break
+    line_mutex.release()
+    
+    # If no teller is there, wait until teller calls
+    if selected_teller is None:
+        # Wait until a teller becomes available
+        while selected_teller is None and not bank_closed:
+            for i in range(3):
+                if teller_available[i].acquire(blocking=False):
+                    selected_teller = i
+                    break
+            if selected_teller is None:
+                # If no teller, sleep a bit to prevent busy waiting
+                time.sleep(0.001)
+    
+    # If bank closed while waiting, just exit
+    if bank_closed:
+        return
+        
+    # Customer selects the teller
+    print(f"Customer {id} [Teller {selected_teller}]: selects teller")
+    
+    # Set customer ID for the teller
+    customer_ids_mutex.acquire()
+    customer_ids[selected_teller] = id
+    customer_ids_mutex.release()
+    
+    # Customer introduces itself
+    print(f"Customer {id} [Teller {selected_teller}] introduces itself")
+    
+    # Signal teller that customer is at the counter
+    customer_at_teller[selected_teller].release()
+    
+    # Wait for teller to ask for transaction
+    transaction_requested[selected_teller].acquire()
+    
+    # Tell the teller the transaction type
+    print(f"Customer {id} [Teller {selected_teller}]: asks for {transaction_name} transaction")
+    
+    # Set transaction type for the teller
+    transaction_types_mutex.acquire()
+    transaction_types[selected_teller] = transaction_type
+    transaction_types_mutex.release()
+    
+    # Transaction has been started/told
+    transaction_told[selected_teller].release()
+    
+    # Wait for transaction to finish up
+    transaction_done[selected_teller].acquire()
+    
+    # Leave the teller
+    print(f"Customer {id} [Teller {selected_teller}]: leaves teller")
+    
+    # Customer has left teller
+    customer_left[selected_teller].release()
+    
+    # Leave the bank through the door
+    print(f"Customer {id} []: goes to door")
+    print(f"Customer {id} []: leaves the bank")
 
 
 # Main function - just a placeholder for now
