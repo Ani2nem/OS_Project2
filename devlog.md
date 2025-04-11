@@ -205,6 +205,27 @@ The main code of the project is complete, I just need to test the project and ho
 
 ## Session Progress
 
+Nothing.
+
+## Need to do
+
+- Turn in the project
+
+
+
+# Apr 11th 2025 - 9:00 am
+
+## Thoughts so far, Started the project
+
+The main code of the project is complete, I just need to test the project and hope nothing breaks or it doesn't take too long. 
+
+## Plan for this session
+
+- Test my code and make sure it is working, both with small sample and full 50 sample.
+- Complete the ReadMe file for running instructions
+- Commit, push and turn in the project.
+
+## Session Progress
 
 
 ## Need to do
