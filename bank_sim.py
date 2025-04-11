@@ -269,7 +269,7 @@ def main():
     for t in teller_threads:
         t.join()
     
-    print("The bank is closed for the day, see you tomorrow!")
+    print("The bank closes for the day.")
 
 if __name__ == "__main__":
     main()

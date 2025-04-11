@@ -217,7 +217,12 @@ Nothing.
 
 ## Thoughts so far, Started the project
 
-The main code of the project is complete, I just need to test the project and hope nothing breaks or it doesn't take too long. 
+The main code of the project is complete, I just need to test the project and hope nothing breaks or it doesn't take too long.
+
+- I need to make sure the customer counting is working correctly - currently the tellers might be incrementing the counter, which could lead to overcounting.
+- The busy-waiting loop in the customer selection logic might not be efficient.
+- I need to make sure the bank closing message matches the required output format.
+- I need to complete the README with proper instructions.
 
 ## Plan for this session
 
@@ -227,6 +232,19 @@ The main code of the project is complete, I just need to test the project and ho
 
 ## Session Progress
 
+I ran the initial tests on my program and everything seems to be working alright. 
+
+The program:
+- Creates teller and customer threads
+- Manages the semaphores for the safe, manager, and door
+- Handles customer interactions and transactions
+- Closes the bank when all customers are served
+
+I had a problem with the terminal output not showing the complete output of the execution from the start. The terminal buffer was only showing parts of the middle of the execution, which made it hard to verify that the beginning sequence was correct.
+To solve this problem, I changed my approach and used output redirection to save the complete output to a file:
+`python3 bank_sim.py > full_output.txt`
+
+This output shows exactly everything in the program and it is as expected and matches the sample-run.txt demo file structure. 
 
 ## Need to do
 
